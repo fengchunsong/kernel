@@ -261,6 +261,9 @@ int __init cma_declare_contiguous(phys_addr_t base,
 	if (alignment && !is_power_of_2(alignment))
 		return -EINVAL;
 
+	pr_debug("%s(size %pa, base %pa, limit %pa alignment %pa)\n",
+		__func__, &size, &base, &limit, &alignment);
+
 	/*
 	 * Sanitise input arguments.
 	 * Pages both ends in CMA area could be merged into adjacent unmovable
@@ -272,6 +275,9 @@ int __init cma_declare_contiguous(phys_addr_t base,
 	base = ALIGN(base, alignment);
 	size = ALIGN(size, alignment);
 	limit &= ~(alignment - 1);
+
+	pr_debug("f:%s(size %pa, base %pa, limit %pa alignment %pa)\n",
+		__func__, &size, &base, &limit, &alignment);
 
 	if (!base)
 		fixed = false;
